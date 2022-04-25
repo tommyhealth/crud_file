@@ -1,11 +1,11 @@
 package ru.company;
 
 public class Person {
-    private String firstName;
-    private String secondName;
-    private String patronymic;
+    private final String firstName;
+    private final String secondName;
+    private final String patronymic;
 
-    public Person( String firstName, String secondName, String patronimyc) {
+    public Person(String firstName, String secondName, String patronimyc) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.patronymic = patronimyc;
