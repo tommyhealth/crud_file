@@ -1,4 +1,4 @@
-package ru.company;
+package ru.fallindawn;
 
 public class Person {
     private final String firstName;

@@ -1,4 +1,4 @@
-package ru.company;
+package ru.fallindawn;
 
 import java.io.*;
 import java.nio.file.Files;

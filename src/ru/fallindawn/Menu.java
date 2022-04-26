@@ -1,4 +1,4 @@
-package ru.company;
+package ru.fallindawn;
 
 public class Menu {
     private final String menu =  "==========\n1 - Список людей\n2 - Добавить человека\n3 " +
