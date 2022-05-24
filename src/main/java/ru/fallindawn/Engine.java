@@ -109,7 +109,7 @@ public class Engine {
 
     private Person personFromString(String line) {
         String[] fullName = line.split(" ");
-        return new Person(fullName[0].substring(fullName[0].indexOf('/') + 1), fullName[1], fullName[2]);
+        return new Person(1, fullName[0].substring(fullName[0].indexOf('/') + 1), fullName[1], fullName[2]);
     }
 
     private int getIdFromString(String line) {
