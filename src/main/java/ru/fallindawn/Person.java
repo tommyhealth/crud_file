@@ -50,7 +50,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return this.id + " " + this.firstName + " " + this.secondName + " " + this.patronymic;
+        return this.firstName + " " + this.secondName + " " + this.patronymic;
     }
 
 }
