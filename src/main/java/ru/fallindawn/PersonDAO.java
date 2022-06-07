@@ -8,7 +8,7 @@ public class PersonDAO implements DAO {
     private static final PersonDAO PERSON_DAO = new PersonDAO();
 
     private static final String USER = "postgres";
-    private static final String PASSWORD = "89198768049";
+    private static final String PASSWORD = "";
     private static final String URL = "jdbc:postgresql://localhost:5433/crud_persons";
 
     public static final String SELECT_FROM_PERSONS_WHERE_ID = "SELECT * FROM persons WHERE id=?";
