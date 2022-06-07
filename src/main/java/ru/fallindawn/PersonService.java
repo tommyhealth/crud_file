@@ -2,8 +2,8 @@ package ru.fallindawn;
 
 import java.util.Scanner;
 
-public class EngineDAO {
-    private final PersonDAO personDAO = PersonDAO.getInstance();
+public class PersonService {
+    private final DAO personDAO = PersonDAO.getInstance();
 
     public void run() {
         Menu menu = new Menu();
@@ -52,6 +52,7 @@ public class EngineDAO {
                 }
                 case 0: {
                     System.out.println("ПОКА!");
+                    System.exit(0);
                     break;
                 }
                 default: {

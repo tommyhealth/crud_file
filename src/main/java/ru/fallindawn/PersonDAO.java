@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDAO {
+public class PersonDAO implements DAO {
     private static final PersonDAO PERSON_DAO = new PersonDAO();
     private static final String USER = "postgres";
     private static final String PASSWORD = "89198768049";
@@ -28,14 +28,15 @@ public class PersonDAO {
         return PERSON_DAO;
     }
 
+    @Override
     public List<Person> getAll() {
         List<Person> people = new ArrayList<>();
 
         try {
             Statement statement = connection.createStatement();
-            String SQL = "SELECT * FROM persons";
-            ResultSet resultSet = statement.executeQuery(SQL);
-
+            String SELECT_ALL_PERSONS_QUERY = "SELECT * FROM persons";
+            ResultSet resultSet = statement.executeQuery(SELECT_ALL_PERSONS_QUERY);
+            
             while ((resultSet.next())) {
                 Person person = new Person();
                 person.setId(resultSet.getInt("id"));
@@ -50,16 +51,17 @@ public class PersonDAO {
         return people;
     }
 
+    @Override
     public Person getPersonById(int id) {
         Person person = null;
 
         try {
-            PreparedStatement preparedStatement =
+            PreparedStatement SELECT_PERSON_BY_ID_QUERY =
                     connection.prepareStatement("SELECT * FROM persons WHERE id=?");
 
-            preparedStatement.setInt(1, id);
+            SELECT_PERSON_BY_ID_QUERY.setInt(1, id);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = SELECT_PERSON_BY_ID_QUERY.executeQuery();
 
             resultSet.next();
 
@@ -77,53 +79,57 @@ public class PersonDAO {
         return person;
     }
 
+    @Override
     public void save(String fio) {
         Person person = personFromString(fio);
 
         try {
-            PreparedStatement preparedStatement =
+            PreparedStatement SAVE_PERSON_QUERY =
                     connection.prepareStatement("INSERT INTO persons VALUES(default, current_timestamp, ?, ?, ?)");
 
-            preparedStatement.setString(1, person.getFirstName());
-            preparedStatement.setString(2, person.getSecondName());
-            preparedStatement.setString(3, person.getPatronymic());
+            SAVE_PERSON_QUERY.setString(1, person.getFirstName());
+            SAVE_PERSON_QUERY.setString(2, person.getSecondName());
+            SAVE_PERSON_QUERY.setString(3, person.getPatronymic());
 
-            preparedStatement.executeUpdate();
+            SAVE_PERSON_QUERY.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
+    @Override
     public void update(int id, String fio) {
         Person updatePerson = personFromString(fio);
         try {
-            PreparedStatement preparedStatement =
+            PreparedStatement UPDATE_PERSON_QUERY =
                     connection.prepareStatement("UPDATE persons SET first_name=?, second_name=?, patronimyc=? WHERE id=?");
 
-            preparedStatement.setString(1, updatePerson.getFirstName());
-            preparedStatement.setString(2, updatePerson.getSecondName());
-            preparedStatement.setString(3, updatePerson.getPatronymic());
-            preparedStatement.setInt(4, id);
+            UPDATE_PERSON_QUERY.setString(1, updatePerson.getFirstName());
+            UPDATE_PERSON_QUERY.setString(2, updatePerson.getSecondName());
+            UPDATE_PERSON_QUERY.setString(3, updatePerson.getPatronymic());
+            UPDATE_PERSON_QUERY.setInt(4, id);
 
-            preparedStatement.executeUpdate();
+            UPDATE_PERSON_QUERY.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
+    @Override
     public void delete(int id) {
-        PreparedStatement preparedStatement =
+        PreparedStatement DELETE_PERSON_BY_ID_QUERY =
                 null;
         try {
-            preparedStatement = connection.prepareStatement("DELETE FROM persons WHERE id=?");
+            DELETE_PERSON_BY_ID_QUERY = connection.prepareStatement("DELETE FROM persons WHERE id=?");
 
-            preparedStatement.setInt(1, id);
+            DELETE_PERSON_BY_ID_QUERY.setInt(1, id);
 
-            preparedStatement.executeUpdate();
+            DELETE_PERSON_BY_ID_QUERY.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     private Person personFromString(String fio) {
         Person person = new Person();
         String[] f_i_o = fio.split(" ");
