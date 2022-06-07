@@ -6,9 +6,16 @@ import java.util.List;
 
 public class PersonDAO implements DAO {
     private static final PersonDAO PERSON_DAO = new PersonDAO();
+
     private static final String USER = "postgres";
     private static final String PASSWORD = "89198768049";
     private static final String URL = "jdbc:postgresql://localhost:5433/crud_persons";
+
+    public static final String SELECT_FROM_PERSONS_WHERE_ID = "SELECT * FROM persons WHERE id=?";
+    public static final String SELECT_ALL_PERSONS_QUERY = "SELECT * FROM persons";
+    public static final String SAVE_PERSON_QUERY = "INSERT INTO persons VALUES(default, current_timestamp, ?, ?, ?)";
+    public static final String UPDATE_PERSON_QUERY = "UPDATE persons SET first_name=?, second_name=?, patronimyc=? WHERE id=?";
+    public static final String DELETE_PERSON_BY_ID_QUERY = "DELETE FROM persons WHERE id=?";
 
     private static Connection connection;
 
@@ -34,7 +41,7 @@ public class PersonDAO implements DAO {
 
         try {
             Statement statement = connection.createStatement();
-            String SELECT_ALL_PERSONS_QUERY = "SELECT * FROM persons";
+
             ResultSet resultSet = statement.executeQuery(SELECT_ALL_PERSONS_QUERY);
             
             while ((resultSet.next())) {
@@ -56,12 +63,12 @@ public class PersonDAO implements DAO {
         Person person = null;
 
         try {
-            PreparedStatement SELECT_PERSON_BY_ID_QUERY =
-                    connection.prepareStatement("SELECT * FROM persons WHERE id=?");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(SELECT_FROM_PERSONS_WHERE_ID);
 
-            SELECT_PERSON_BY_ID_QUERY.setInt(1, id);
+            preparedStatement.setInt(1, id);
 
-            ResultSet resultSet = SELECT_PERSON_BY_ID_QUERY.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             resultSet.next();
 
@@ -84,14 +91,14 @@ public class PersonDAO implements DAO {
         Person person = personFromString(fio);
 
         try {
-            PreparedStatement SAVE_PERSON_QUERY =
-                    connection.prepareStatement("INSERT INTO persons VALUES(default, current_timestamp, ?, ?, ?)");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(PersonDAO.SAVE_PERSON_QUERY);
 
-            SAVE_PERSON_QUERY.setString(1, person.getFirstName());
-            SAVE_PERSON_QUERY.setString(2, person.getSecondName());
-            SAVE_PERSON_QUERY.setString(3, person.getPatronymic());
+            preparedStatement.setString(1, person.getFirstName());
+            preparedStatement.setString(2, person.getSecondName());
+            preparedStatement.setString(3, person.getPatronymic());
 
-            SAVE_PERSON_QUERY.executeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -101,15 +108,15 @@ public class PersonDAO implements DAO {
     public void update(int id, String fio) {
         Person updatePerson = personFromString(fio);
         try {
-            PreparedStatement UPDATE_PERSON_QUERY =
-                    connection.prepareStatement("UPDATE persons SET first_name=?, second_name=?, patronimyc=? WHERE id=?");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(PersonDAO.UPDATE_PERSON_QUERY);
 
-            UPDATE_PERSON_QUERY.setString(1, updatePerson.getFirstName());
-            UPDATE_PERSON_QUERY.setString(2, updatePerson.getSecondName());
-            UPDATE_PERSON_QUERY.setString(3, updatePerson.getPatronymic());
-            UPDATE_PERSON_QUERY.setInt(4, id);
+            preparedStatement.setString(1, updatePerson.getFirstName());
+            preparedStatement.setString(2, updatePerson.getSecondName());
+            preparedStatement.setString(3, updatePerson.getPatronymic());
+            preparedStatement.setInt(4, id);
 
-            UPDATE_PERSON_QUERY.executeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -117,14 +124,14 @@ public class PersonDAO implements DAO {
 
     @Override
     public void delete(int id) {
-        PreparedStatement DELETE_PERSON_BY_ID_QUERY =
+        PreparedStatement preparedStatement =
                 null;
         try {
-            DELETE_PERSON_BY_ID_QUERY = connection.prepareStatement("DELETE FROM persons WHERE id=?");
+            preparedStatement = connection.prepareStatement(PersonDAO.DELETE_PERSON_BY_ID_QUERY);
 
-            DELETE_PERSON_BY_ID_QUERY.setInt(1, id);
+            preparedStatement.setInt(1, id);
 
-            DELETE_PERSON_BY_ID_QUERY.executeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
