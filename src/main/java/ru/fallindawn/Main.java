@@ -3,8 +3,8 @@ package ru.fallindawn;
 public class Main {
 
     public static void main(String[] args) {
-        Engine engine = new Engine();
-        engine.start();
-        engine.work();
+        PersonService personService = new PersonService();
+        personService.run();
     }
 }
+
