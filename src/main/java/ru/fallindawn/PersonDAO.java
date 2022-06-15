@@ -92,7 +92,7 @@ public class PersonDAO implements DAO {
 
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(PersonDAO.SAVE_PERSON_QUERY);
+                    connection.prepareStatement(SAVE_PERSON_QUERY);
 
             preparedStatement.setString(1, person.getFirstName());
             preparedStatement.setString(2, person.getSecondName());
@@ -109,7 +109,7 @@ public class PersonDAO implements DAO {
         Person updatePerson = personFromString(fio);
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(PersonDAO.UPDATE_PERSON_QUERY);
+                    connection.prepareStatement(UPDATE_PERSON_QUERY);
 
             preparedStatement.setString(1, updatePerson.getFirstName());
             preparedStatement.setString(2, updatePerson.getSecondName());
@@ -127,7 +127,7 @@ public class PersonDAO implements DAO {
         PreparedStatement preparedStatement =
                 null;
         try {
-            preparedStatement = connection.prepareStatement(PersonDAO.DELETE_PERSON_BY_ID_QUERY);
+            preparedStatement = connection.prepareStatement(DELETE_PERSON_BY_ID_QUERY);
 
             preparedStatement.setInt(1, id);
 
