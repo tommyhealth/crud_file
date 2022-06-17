@@ -123,7 +123,7 @@ public class PersonDAO implements DAO {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         PreparedStatement preparedStatement =
                 null;
         try {

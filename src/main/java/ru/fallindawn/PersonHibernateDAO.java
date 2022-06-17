@@ -13,39 +13,42 @@ public class PersonHibernateDAO implements DAO {
     }
 
     public Person getPersonById (int id) {
-        return HibernateUtil.getSessionFactory().openSession().get(Person.class, id);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Person person = session.get(Person.class, id);
+        session.close();
+        return person;
     }
 
     public void save(String fio) {
-        Person person = personFromString(fio);
-
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Person person = personFromString(fio);
         Transaction beginTransaction = session.beginTransaction();
-        session.save(person);
+        session.persist(person);
         beginTransaction.commit();
         session.close();
     }
 
     public void update(int id, String fio) {
-        Person person = personFromString(fio);
-
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Person person = personFromString(fio);
         Transaction beginTransaction = session.beginTransaction();
-        session.update(person);
+        session.merge(person);
         beginTransaction.commit();
         session.close();
     }
 
-    public void delete(int id) {
+    public void delete(Integer id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction beginTransaction = session.beginTransaction();
-        session.delete(id);
+        session.remove(id);
         beginTransaction.commit();
         session.close();
     }
 
     public List<Person> getAll() {
-        List<Person> persons = (List<Person>)  HibernateUtil.getSessionFactory().openSession().createQuery("From ru.fallindawn.Person").list();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Person> persons = session.createQuery("From Person", Person.class).list();
+        session.close();
         return persons;
     }
 
