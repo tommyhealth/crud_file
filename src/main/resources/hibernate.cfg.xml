@@ -20,7 +20,7 @@
 
     <property name="default_schema">public</property>
 
-    <mapping class="ru.fallindawn.Person"/>
+    <mapping class="ru.fallindawn.dao.model.Person"/>
 
     <!-- DB schema will be updated if needed -->
   </session-factory>

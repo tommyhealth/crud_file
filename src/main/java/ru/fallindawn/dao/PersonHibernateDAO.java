@@ -1,7 +1,10 @@
-package ru.fallindawn;
+package ru.fallindawn.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import ru.fallindawn.HibernateUtil;
+import ru.fallindawn.dao.model.Person;
+
 import java.util.List;
 
 public class PersonHibernateDAO implements DAO {

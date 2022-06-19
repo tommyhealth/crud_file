@@ -1,4 +1,4 @@
-package ru.fallindawn;
+package ru.fallindawn.dao.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +19,7 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String firstName;
     private String secondName;
     private String patronymic;

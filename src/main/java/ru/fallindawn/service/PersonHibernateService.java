@@ -1,11 +1,14 @@
-package ru.fallindawn;
+package ru.fallindawn.service;
+
+import ru.fallindawn.Menu;
+import ru.fallindawn.dao.DAO;
+import ru.fallindawn.dao.PersonHibernateDAO;
 
 import java.util.Scanner;
 
 public class PersonHibernateService {
 
     private final DAO hibernateDAO = PersonHibernateDAO.getInstance();
-
 
     public void run() {
         Menu menu = new Menu();

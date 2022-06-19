@@ -1,8 +1,12 @@
-package ru.fallindawn;
+package ru.fallindawn.service;
+
+import ru.fallindawn.Menu;
+import ru.fallindawn.dao.PersonDAO;
+import ru.fallindawn.dao.DAO;
 
 import java.util.Scanner;
 
-public class PersonService {
+public class PersonJDBCService {
     private final DAO personDAO = PersonDAO.getInstance();
 
     public void run() {

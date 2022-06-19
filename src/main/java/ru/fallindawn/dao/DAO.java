@@ -1,4 +1,6 @@
-package ru.fallindawn;
+package ru.fallindawn.dao;
+
+import ru.fallindawn.dao.model.Person;
 
 import java.util.List;
 
