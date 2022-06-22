@@ -35,17 +35,22 @@ public class PersonHibernateDAO implements DAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Person person = personFromString(fio);
         Transaction beginTransaction = session.beginTransaction();
-        session.merge(person);
+        Person personBd = getPersonById(id);
+        personBd.setFirstName(person.getFirstName());
+        personBd.setSecondName(person.getSecondName());
+        personBd.setPatronymic(person.getPatronymic());
+        session.merge(personBd);
         beginTransaction.commit();
         session.close();
     }
 
     public void delete(Integer id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction beginTransaction = session.beginTransaction();
-        session.remove(id);
-        beginTransaction.commit();
-        session.close();
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         Transaction beginTransaction = session.beginTransaction();
+         Person person = getPersonById(id);
+         session.remove(person);
+         beginTransaction.commit();
+         session.close();
     }
 
     public List<Person> getAll() {
