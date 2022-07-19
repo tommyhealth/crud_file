@@ -1,4 +1,6 @@
-package ru.fallindawn;
+package ru.fallindawn.dao;
+
+import ru.fallindawn.dao.model.Person;
 
 import java.util.List;
 
@@ -12,5 +14,5 @@ public interface DAO {
 
     void update(int id, String fio);
 
-    void delete(int id);
+    void delete(Integer id);
 }

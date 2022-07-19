@@ -1,4 +1,6 @@
-package ru.fallindawn;
+package ru.fallindawn.dao;
+
+import ru.fallindawn.dao.model.Person;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -123,7 +125,7 @@ public class PersonDAO implements DAO {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         PreparedStatement preparedStatement =
                 null;
         try {
